@@ -4,7 +4,7 @@ from datetime import datetime
 import openai
 
 # Set up the page configuration
-st.set_page_config(page_title="ThriveConnect", layout="wide")
+st.set_page_config(page_title="Bondary", layout="wide")
 
 # Initialize user session state
 if "avatar" not in st.session_state:
@@ -16,25 +16,24 @@ if "hub" not in st.session_state:
 
 # Home Page
 def home():
-    st.title("Welcome to ThriveConnect!")
+    st.title("Welcome to Bondary!")
     st.write("""
-        **ThriveConnect** is your personalized well-being and community platform.
-        Here, you can connect anonymously, explore resources, and receive tailored support.
+        **Bondary** is your sanctuary for connection and well-being. Here, you can interact anonymously, explore resources, and receive personalized support.
     """)
-    st.image("welcome_image.png", use_column_width=True)
+    st.image("bondary_welcome.png", use_column_width=True)
 
 # User Registration with Personalized Hub Recommendation
 def user_registration():
-    st.subheader("Create Your Profile")
-    st.text("Help us personalize your experience with a few questions.")
+    st.subheader("Create Your Bondary Profile")
+    st.text("Help us personalize your experience with a few quick questions.")
     user_name = st.text_input("What's your first name?")
     main_concern = st.selectbox(
-        "What is your primary area of concern?",
-        ["Managing Stress", "Feeling Depressed", "Experiencing Anxiety", "Chronic Illness (e.g., Diabetes)", "General Well-being"]
+        "What is your primary area of focus?",
+        ["Managing Stress", "Feeling Depressed", "Experiencing Anxiety", "Living with a Chronic Illness (e.g., Diabetes)", "General Well-being"]
     )
     additional_preferences = st.multiselect(
-        "Select any additional topics you're interested in:",
-        ["Mindfulness", "Peer Support", "Physical Health", "Workshops & Events"]
+        "Select additional topics you're interested in:",
+        ["Mindfulness", "Community Support", "Physical Health", "Workshops & Events"]
     )
     st.session_state["preferences"] = {
         "name": user_name,
@@ -47,7 +46,7 @@ def user_registration():
         st.session_state["hub"] = "Depression Support Hub"
     elif main_concern == "Experiencing Anxiety":
         st.session_state["hub"] = "Anxiety Management Hub"
-    elif main_concern == "Chronic Illness (e.g., Diabetes)":
+    elif main_concern == "Living with a Chronic Illness (e.g., Diabetes)":
         st.session_state["hub"] = "Chronic Illness Hub"
     elif main_concern == "Managing Stress":
         st.session_state["hub"] = "Stress Relief Hub"
@@ -55,14 +54,14 @@ def user_registration():
         st.session_state["hub"] = "General Wellness Hub"
 
     if st.button("Submit"):
-        st.success(f"Welcome to ThriveConnect, {user_name}! We've personalized your experience based on your preferences.")
+        st.success(f"Welcome to Bondary, {user_name}! Your experience has been personalized based on your preferences.")
         st.session_state["avatar"] = f"Avatar for {user_name}"
 
 # Daily Check-In with Dynamic Hub Routing
 def daily_check_in():
-    st.subheader("Daily Check-In")
-    st.write("How are you feeling today?")
-    user_response = st.text_area("Share your thoughts or describe any challenges you're facing:")
+    st.subheader("Daily Check-In at Bondary")
+    st.write("How are you feeling today? Let us guide you to the right resources.")
+    user_response = st.text_area("Share your thoughts or any challenges you're facing:")
     
     if st.button("Submit"):
         if "depress" in user_response.lower():
@@ -76,7 +75,7 @@ def daily_check_in():
         else:
             st.session_state["hub"] = "General Wellness Hub"
         
-        st.success(f"We've directed you to the {st.session_state['hub']} based on your check-in.")
+        st.success(f"You've been directed to the {st.session_state['hub']} based on your check-in.")
 
 # Wellness Hubs
 def wellness_hub():
@@ -87,31 +86,57 @@ def wellness_hub():
         st.write("This hub offers resources for managing depression, including peer stories, expert advice, and guided workshops.")
         st.write("- **Mindfulness Techniques**")
         st.write("- **Peer Support Forum**")
-        st.write("- **Counseling Services**")
+        st.write("- **Access to Counseling Services**")
     elif hub == "Anxiety Management Hub":
-        st.write("Explore strategies for handling anxiety, including breathing exercises, expert talks, and community support.")
+        st.write("Explore strategies for handling anxiety, including breathing exercises, expert talks, and supportive community interactions.")
         st.write("- **Guided Breathing Sessions**")
         st.write("- **Expert Q&A on Anxiety**")
-        st.write("- **Upcoming Workshops**")
+        st.write("- **Upcoming Anxiety Workshops**")
     elif hub == "Chronic Illness Hub":
-        st.write("This hub provides support for managing chronic illnesses like diabetes, with tips, diet plans, and shared experiences.")
-        st.write("- **Diet and Lifestyle Tips for Diabetes**")
+        st.write("This hub provides support for managing chronic conditions like diabetes, with tips, diet plans, and shared experiences.")
+        st.write("- **Diet and Lifestyle Tips**")
         st.write("- **Support Group Meetings**")
         st.write("- **Health Monitoring Resources**")
     elif hub == "Stress Relief Hub":
         st.write("Find relief from stress with resources on mindfulness, relaxation techniques, and community activities.")
-        st.write("- **Guided Meditation**")
+        st.write("- **Guided Meditation Sessions**")
         st.write("- **Stress Management Workshops**")
         st.write("- **Peer Discussion Groups**")
     else:
         st.write("Explore a variety of wellness topics and discover resources tailored to your needs.")
         st.write("- **General Health Tips**")
         st.write("- **Community Events**")
-        st.write("- **Campus Resources**")
+        st.write("- **Campus Resources and Services**")
+
+# Explore Section
+def explore_section():
+    st.subheader("Explore Bentley and Beyond with Bondary")
+    st.write("Discover the best spots for dining, shopping, and activities near campus.")
+    recommendations = ["Top Restaurants", "Local Shops", "Upcoming Campus Events"]
+    selected_recommendation = st.selectbox("What would you like to explore?", recommendations)
+    
+    if selected_recommendation == "Top Restaurants":
+        st.write("Student favorites near campus:")
+        st.write("- **The Friendly Toast**")
+        st.write("- **Pressed Café**")
+        st.write("- **True North Café**")
+    elif selected_recommendation == "Local Shops":
+        st.write("Popular shops nearby:")
+        st.write("- **Barnes & Noble**")
+        st.write("- **The Mall at Chestnut Hill**")
+    else:
+        st.write("Upcoming events on campus include the Wellness Fair and Student Market Day.")
+
+# User Profile
+def user_profile():
+    st.subheader("Your Bondary Profile")
+    st.write(f"Avatar: {st.session_state['avatar']}")
+    st.write("Your Preferences:")
+    st.write(st.session_state["preferences"])
 
 # Main Navigation
-st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Home", "Registration", "Daily Check-In", "Wellness Hub"])
+st.sidebar.title("Bondary Navigation")
+page = st.sidebar.radio("Navigate to", ["Home", "Registration", "Daily Check-In", "Wellness Hub", "Explore", "Profile"])
 
 if page == "Home":
     home()
@@ -121,3 +146,7 @@ elif page == "Daily Check-In":
     daily_check_in()
 elif page == "Wellness Hub":
     wellness_hub()
+elif page == "Explore":
+    explore_section()
+elif page == "Profile":
+    user_profile()

@@ -32,7 +32,7 @@ def registration():
     if st.button("Complete Registration"):
         st.success("Profile created! Welcome to Bondary.")
 
-# Personalized Form
+# Personalized Form (Mental Health Assessment)
 def personalized_form():
     st.subheader("Tell Us About Yourself")
     main_concern = st.selectbox("What is your primary area of focus?", ["General Well-being", "Stress", "Anxiety", "Depression", "Chronic Illness"])
@@ -46,7 +46,7 @@ def personalized_form():
         "sleep_quality": sleep_quality,
         "social_connection": social_connection
     }
-    
+
     if st.button("Get Recommendations"):
         st.session_state["recommendations"] = get_recommendations()
         st.success("Recommendations are ready! Check the Wellness Hub.")
@@ -54,17 +54,28 @@ def personalized_form():
 # Generate recommendations based on user input
 def get_recommendations():
     preferences = st.session_state["preferences"]
+    recommendations = []
+
     if preferences["main_concern"] == "Depression":
-        return ["Consider scheduling a session with BetterMynd.", "Join a mindfulness workshop this week."]
+        recommendations.append("Consider scheduling a session with BetterMynd for teletherapy.")
+        recommendations.append("Join a mindfulness workshop through the Counseling Center Services.")
     elif preferences["main_concern"] == "Anxiety":
-        return ["Try guided breathing exercises in the Wellness Hub.", "Connect with a peer support group."]
+        recommendations.append("Explore guided breathing exercises in the Wellness Hub.")
+        recommendations.append("Connect with a peer support group through the Let’s Talk program.")
+    elif preferences["main_concern"] == "Chronic Illness":
+        recommendations.append("Access resources for managing chronic conditions via ThrivingCampus.")
+    elif preferences["main_concern"] == "Stress":
+        recommendations.append("Try Kognito’s online training for stress recognition and management.")
     else:
-        return ["Explore the general well-being tips in the Wellness Hub."]
+        recommendations.append("Explore general well-being tips and workshops available in the Wellness Hub.")
+
+    return recommendations
 
 # Daily Check-In
 def daily_check_in():
-    st.subheader("Daily Check-In")
-    mood = st.selectbox("How are you feeling today?", ["Great", "Okay", "Stressed", "Anxious", "Down"])
+    st.subheader("Daily Check-In at Bondary")
+    st.write("How are you feeling today? Let us guide you to the right resources.")
+    user_response = st.text_area("Share your thoughts or any challenges you're facing:")
     if st.button("Submit"):
         st.success("Thank you for sharing! Your feedback will help tailor your experience.")
 
@@ -79,21 +90,20 @@ def social_space():
 # Wellness Hub
 def wellness_hub():
     st.subheader("Your Personalized Wellness Hub")
-    st.write("Based on your preferences, here are some recommendations:")
     for recommendation in st.session_state["recommendations"]:
         st.write(f"- {recommendation}")
 
 # Counseling Center & Resources
 def counseling_resources():
     st.subheader("Counseling Center & Mental Health Resources")
-    st.write("- **Kognito:** Interactive training for recognizing distress")
-    st.write("- **BetterMynd:** Free online therapy sessions")
-    st.write("- **Let’s Talk:** Drop-in consultations with counselors")
-    st.write("- **ThrivingCampus:** Connect with off-campus providers")
+    st.write("- **Kognito:** [Interactive training for recognizing distress](bentley.kognito.com)")
+    st.write("- **BetterMynd:** [Free online therapy sessions](https://login.bettermynd.com/)")
+    st.write("- **Let’s Talk Program:** [Drop-in consultations](https://bentleydownloads.s3.amazonaws.com/about/Let's+Talk+Website+Document.pdf)")
+    st.write("- **ThrivingCampus:** [Find off-campus providers](https://bentley.thrivingcampus.com/)")
 
 # Explore Section
 def explore():
-    st.subheader("Explore")
+    st.subheader("Explore Bentley and Beyond")
     st.write("- **Student Organizations:** Join clubs and meet new people")
     st.write("- **Campus Events:** Stay updated on upcoming activities")
     st.write("- **Testimonies:** Read stories from fellow students")
@@ -105,7 +115,6 @@ def explore():
 def profile():
     st.subheader("Modify Your Profile")
     st.write(f"Username: {st.session_state['username']}")
-    st.write("Avatar:", st.session_state["avatar"])
     st.session_state["avatar"] = st.selectbox("Change your avatar:", ["Default Avatar", "Leaf Avatar", "Star Avatar"])
 
 # Help Page

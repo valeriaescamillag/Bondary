@@ -122,6 +122,7 @@ def help_page():
     st.subheader("Help & Emergency Contacts")
     st.write("- **911:** For immediate emergencies")
     st.write("- **Bentley University Protocol:** Contact campus safety for urgent support")
+    st.write("- **University Police:** If you are experiencing a medical or mental health emergency, call University Police at (781) 891-3131")
 
 # Main Navigation
 st.sidebar.title("Bondary Navigation")
